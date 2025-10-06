@@ -1,37 +1,6 @@
-#include <stdint.h>
-
-#include <bitset>
-#include <cmath>
-#include <cstdint>
-#include <iomanip>
-#include <iostream>
-#include <limits>
+#include "tests.h"
 
 using namespace std;
-
-#define NUM_TESTS 10
-#define MAX_VALUE 100
-#define MIN_VALUE -100
-uint8_t const table_width[] = {12, 12, 35, 12};
-
-// IEEE 754 single-precision float constants
-uint8_t const width = 32U;
-uint8_t const exp_width = 8U;
-uint8_t const mantissa_width = width - exp_width - 1;
-uint8_t const bias = 127U;
-
-/*
- * *** STUDENTS SHOULD WRITE CODE FOR THIS FUNCTION ***
- * Students should create or add any data structures needed.
- * Students should create or add any functions or classes they may need.
- */
-float ieee_754(uint32_t const data) {
-    float value;
-    // This will fail the tests. Students should do the proper IEEE-754 calculation per assignment
-    // using the 32 bit 'data' value passed into this function.
-    value = 1.23;
-    return value;
-}
 
 /*
  * *** STUDENTS SHOULD NOT NEED TO CHANGE THE CODE BELOW. IT IS A CUSTOM TEST HARNESS. ***
@@ -58,7 +27,8 @@ void print_row(bool const test_success, float const rand_val, uint32_t const val
     cout << left << setw(table_width[3]) << setfill(' ') << ieee_754_value << endl;
 }
 
-template<typename T> T rand_min_max(T const min, T const max) {
+template <typename T>
+T rand_min_max(T const min, T const max) {
     T const rand_val = min + static_cast<double>(static_cast<double>(rand())) / (static_cast<double>(RAND_MAX / (max - min)));
     return rand_val;
 }
@@ -109,11 +79,4 @@ bool test() {
     cout << "-------------------------------------------" << endl;
 
     return success;
-}
-
-int main() {
-    if (!test()) {
-        return -1;
-    }
-    return 0;
 }
