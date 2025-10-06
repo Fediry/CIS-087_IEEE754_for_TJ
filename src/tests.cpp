@@ -1,12 +1,14 @@
 #include "tests.h"
 
+#include "ieee754.h"
+
 using namespace std;
 
 /*
  * *** STUDENTS SHOULD NOT NEED TO CHANGE THE CODE BELOW. IT IS A CUSTOM TEST HARNESS. ***
  */
 
-void header() {
+void tests::header() {
     cout << left << setw(table_width[0]) << setfill(' ') << "pass/fail";
     cout << left << setw(table_width[1]) << setfill(' ') << "value";
     cout << left << setw(table_width[2]) << setfill(' ') << "bits";
@@ -18,7 +20,7 @@ void header() {
     cout << left << setw(table_width[3]) << setfill(' ') << "--------" << endl;
 }
 
-void print_row(bool const test_success, float const rand_val, uint32_t const val_int, float const ieee_754_value) {
+void tests::print_row(bool const test_success, float const rand_val, uint32_t const val_int, float const ieee_754_value) {
     // print results
     string const pass_fail = test_success ? "PASS" : "FAIL";
     cout << left << setw(table_width[0]) << setfill(' ') << pass_fail;
@@ -28,12 +30,12 @@ void print_row(bool const test_success, float const rand_val, uint32_t const val
 }
 
 template <typename T>
-T rand_min_max(T const min, T const max) {
+T tests::rand_min_max(T const min, T const max) {
     T const rand_val = min + static_cast<double>(static_cast<double>(rand())) / (static_cast<double>(RAND_MAX / (max - min)));
     return rand_val;
 }
 
-bool test() {
+bool tests::test() {
     // the union
     union float_uint {
         float val_float;

@@ -13,7 +13,7 @@ uint8_t const bias = 127U;
  * Students should create or add any data structures needed.
  * Students should create or add any functions or classes they may need.
  */
-float ieee_754(uint32_t const data) {
+float ieee754::ieee_754(uint32_t const data) {
     float value;
     // This will fail the tests. Students should do the proper IEEE-754 calculation per assignment
     // using the 32 bit 'data' value passed into this function.

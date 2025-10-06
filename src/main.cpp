@@ -5,7 +5,9 @@
 using namespace std;
 
 int main() {
-    if (!test()) {
+    tests test;
+
+    if (!test.test()) {
         return -1;
     }
     return 0;
