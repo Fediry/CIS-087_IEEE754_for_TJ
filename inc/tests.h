@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ieee_754.h"
 #include "main.h"
 
 using namespace std;

@@ -1,12 +1,6 @@
-#include "ieee754.h"
+#include "ieee_754.h"
 
 using namespace std;
-
-// IEEE 754 single-precision float constants
-uint8_t const width = 32U;
-uint8_t const exp_width = 8U;
-uint8_t const mantissa_width = width - exp_width - 1;
-uint8_t const bias = 127U;
 
 /*
  * *** STUDENTS SHOULD WRITE CODE FOR THIS FUNCTION ***

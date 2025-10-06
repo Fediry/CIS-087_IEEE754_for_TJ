@@ -1,6 +1,6 @@
 #include "tests.h"
 
-#include "ieee754.h"
+#include "ieee_754.h"
 
 using namespace std;
 
@@ -37,7 +37,7 @@ T tests::rand_min_max(T const min, T const max) {
 
 bool tests::test() {
     // initialize ieee754 object
-    ieee754 i3e754;
+    ieee754 ieee_754;
 
     // the union
     union float_uint {
@@ -60,7 +60,7 @@ bool tests::test() {
         data.val_float = rand_val;
 
         // calculate using ieee_754 function
-        float ieee_754_value = ieee754.ieee_754(data.val_int);
+        float ieee_754_value = ieee_754.ieee_754(data.val_int);
 
         // test the results
         float const epsilon = std::numeric_limits<float>::epsilon();
