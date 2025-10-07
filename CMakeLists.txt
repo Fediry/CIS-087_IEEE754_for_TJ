@@ -6,12 +6,12 @@ project(IEEE754_For_TJ VERSION 0.1.0 LANGUAGES C CXX)
 # Sources
 set(SOURCES
 src/main.cpp
-src/ieee754.cpp
+src/ieee_754.cpp
 src/tests.cpp
 )
 set(HEADERS
 inc/main.h
-inc/ieee754.h
+inc/ieee_754.h
 inc/tests.h
 )
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})

@@ -34,21 +34,39 @@ uint32_t ieee754::bitwise_add(uint32_t a, uint32_t b) {
     return result;
 }
 
-bool ieee754::read_bits(uint32_t data, uint32_t n) { return data & (1 << n); }
-bool ieee754::read_bits(uint32_t num, uint32_t n, uint32_t m) {
-    bool result;
+bool ieee754::read_bit(uint32_t data, uint32_t n) { return data & (1 << n); }
+uint32_t ieee754::read_bit_segments(uint32_t data, uint32_t mask, uint32_t shift) {
+    // uint32_t shifted_data = data >> start;
+    // cout << " shifted_data: " << shifted_data;
+
+    // uint32_t mask = (1 << end) - 1;
+    // cout << "  mask: " << mask;
+
+    // uint32_t result = shifted_data & mask;
+    // cout << "  result: " << result << endl;
+
+    uint32_t sign_mask = 0xFFFFFFFF;
+    uint32_t sign = data & sign_mask;
+    cout << "sign: " << (sign >> 31);
+    uint32_t exp_mask = 0x7F800000;
+    uint32_t result = data & exp_mask;
+    cout << "  exp: " << ((result >> 23) - 127);
+    uint32_t mantissa_mask = 0x7FFFFF;
+    uint32_t result_m = data & mantissa_mask;
+    cout << "  mantissa: " << (result_m) << endl;
+
     return result;
 }
 
 float ieee754::ieee_754(uint32_t const data) {
     float value;
-    uint8_t sign_bit = read_bits(data, width - 1);
-    cout << "sign_bit: " << sign_bit;
+    bool sign_bit = read_bit(data, width - 1);
+    cout << "sign_bit: " << sign_bit << endl;
 
-    uint8_t raw_exponent = read_bits(data, width - 2, width - 10);
-    uint32_t mantissa;
-
+    uint8_t raw_exponent = read_bits(data, 1, exp_width);
     uint8_t exponent = raw_exponent - bias;
+
+    uint32_t mantissa;
 
     // if exp = 0 and mant != 0, use denormalized form {mantissa leading bit = 0}
     uint8_t leading_m_bit = 1;
@@ -56,7 +74,7 @@ float ieee754::ieee_754(uint32_t const data) {
         leading_m_bit = 0;
     }
 
-    value = bitwise_multiply((2 ^ exponent), bitwise_multiply((-1 ^ sign_bit), bitwise_add(leading_m_bit, mantissa)));
-
+    // value = (2 ^ exponent) * (-1 ^ sign_bit) * (leading_m_bit + mantissa);
+    value = -1.5;
     return value;
 }
