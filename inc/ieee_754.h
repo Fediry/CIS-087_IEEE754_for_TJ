@@ -11,6 +11,10 @@ uint8_t const mantissa_width = width - exp_width - 1;
 uint8_t const bias = 127U;
 
 class ieee754 {
+   private:
+    uint32_t bitwise_multiply(uint32_t a, uint32_t b);
+    uint32_t bitwise_add(uint32_t a, uint32_t b);
+
    public:
     ieee754() {}
     // using rule of zero
