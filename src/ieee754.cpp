@@ -36,8 +36,15 @@ uint32_t ieee754::bitwise_add(uint32_t a, uint32_t b) {
 
 float ieee754::ieee_754(uint32_t const data) {
     float value;
-    // This will fail the tests. Students should do the proper IEEE-754 calculation per assignment
-    // using the 32 bit 'data' value passed into this function.
-    value = 1.23;
+    uint8_t sign_bit, exponent, raw_exponent, leading_m_bit = 1;
+    uint16_t mantissa;
+
+    // if exp = 0 and mant != 0, use denormalized form {mantissa leading bit = 0}
+    if (exponent == 0 && mantissa != 0) {
+        leading_m_bit = 0;
+    }
+
+    value = (-1 ^ sign_bit) * (leading_m_bit);
+
     return value;
 }
