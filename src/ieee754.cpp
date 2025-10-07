@@ -37,14 +37,16 @@ uint32_t ieee754::bitwise_add(uint32_t a, uint32_t b) {
 float ieee754::ieee_754(uint32_t const data) {
     float value;
     uint8_t sign_bit, exponent, raw_exponent, leading_m_bit = 1;
-    uint16_t mantissa;
+    uint32_t mantissa;
+
+    uint8_t exponent = raw_exponent - bias;
 
     // if exp = 0 and mant != 0, use denormalized form {mantissa leading bit = 0}
     if (exponent == 0 && mantissa != 0) {
         leading_m_bit = 0;
     }
 
-    value = (-1 ^ sign_bit) * (leading_m_bit);
+    value = bitwise_multiply((2 ^ exponent), bitwise_multiply((-1 ^ sign_bit), bitwise_add(leading_m_bit, mantissa)));
 
     return value;
 }
