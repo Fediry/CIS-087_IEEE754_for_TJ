@@ -14,6 +14,8 @@ class ieee754 {
    private:
     uint32_t bitwise_multiply(uint32_t a, uint32_t b);
     uint32_t bitwise_add(uint32_t a, uint32_t b);
+    bool read_bits(uint32_t num, uint32_t n);
+    bool read_bits(uint32_t num, uint32_t n, uint32_t m);
 
    public:
     ieee754() {}

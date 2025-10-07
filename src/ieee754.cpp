@@ -34,14 +34,24 @@ uint32_t ieee754::bitwise_add(uint32_t a, uint32_t b) {
     return result;
 }
 
+bool ieee754::read_bits(uint32_t data, uint32_t n) { return data & (1 << n); }
+bool ieee754::read_bits(uint32_t num, uint32_t n, uint32_t m) {
+    bool result;
+    return result;
+}
+
 float ieee754::ieee_754(uint32_t const data) {
     float value;
-    uint8_t sign_bit, exponent, raw_exponent, leading_m_bit = 1;
+    uint8_t sign_bit = read_bits(data, width - 1);
+    cout << "sign_bit: " << sign_bit;
+
+    uint8_t raw_exponent = read_bits(data, width - 2, width - 10);
     uint32_t mantissa;
 
     uint8_t exponent = raw_exponent - bias;
 
     // if exp = 0 and mant != 0, use denormalized form {mantissa leading bit = 0}
+    uint8_t leading_m_bit = 1;
     if (exponent == 0 && mantissa != 0) {
         leading_m_bit = 0;
     }
