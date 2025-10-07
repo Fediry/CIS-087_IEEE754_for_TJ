@@ -19,6 +19,7 @@ class ieee754 {
     uint32_t bitwise_add(uint32_t a, uint32_t b);
     bool read_bit(uint32_t data, uint32_t n);
     uint32_t read_bit_segments(uint32_t data, uint32_t mask, uint32_t shift);
+    float conv_mantissa(uint32_t mantissa, bool normalized);
 
    public:
     ieee754() {}

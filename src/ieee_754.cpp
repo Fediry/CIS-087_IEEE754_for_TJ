@@ -43,6 +43,39 @@ uint32_t ieee754::read_bit_segments(uint32_t data, uint32_t mask, uint32_t shift
     return result;
 }
 
+float ieee754::conv_mantissa(uint32_t raw_mantissa, bool normalized) {
+    uint32_t output;
+    uint32_t leading_bit;
+
+    // if exp = 0 and mant != 0, use denormalized form {mantissa leading bit = 0}
+    if (normalized) {
+        // 1.mantissa
+        leading_bit = 1;
+    } else {
+        // 0.mantissa
+        leading_bit = 0;
+    }
+
+    float mantissa = 1;
+    float test[23];
+    for (size_t i = 23; i > 0; i--) {
+        if (raw_mantissa & (1 << i - 1)) {
+            for (size_t j = i; j > 0; j--) {
+                test[-i + 23] = 2 * (1 - i);
+            }
+            cout << "\n mantissa bit @ " << i << " == " << test[-i + 23] << endl;
+        }
+    }
+    cout << "test: ";
+    for (int i = 0; i < size(test); i++) {
+        cout << *test << " | ";
+    }
+    cout << endl;
+
+    output = leading_bit + mantissa;
+    return output;
+}
+
 float ieee754::ieee_754(uint32_t const data) {
     float output;
     // bool sign_bit = read_bit(data, width - 1);
@@ -53,17 +86,20 @@ float ieee754::ieee_754(uint32_t const data) {
     uint32_t exponent = raw_exponent - bias;
     cout << " exp: " << bitset<exp_width>(raw_exponent);
 
-    uint32_t mantissa = read_bit_segments(data, mantissa_mask, 0);
-    cout << " mantissa: " << bitset<mantissa_width>(mantissa);
+    uint32_t raw_mantissa = read_bit_segments(data, mantissa_mask, 0);
+    cout << " raw_mantissa: " << raw_mantissa;
+
+    // check for normalization
+    bool normalized = true;
+    if (exponent == 0 && raw_mantissa != 0) {
+        normalized = false;
+    }
+    float mantissa = conv_mantissa(data, normalized);
+    cout << " mantissa: " << mantissa;
 
     cout << " empty output: " << bitset<width>(output) << endl;
-    // if exp = 0 and mant != 0, use denormalized form {mantissa leading bit = 0}
-    uint32_t leading_m_bit = 1;
-    if (exponent == 0 && mantissa != 0) {
-        leading_m_bit = 0;
-    }
 
-    output = (-1 ^ sign_bit) * (2 ^ exponent) * (leading_m_bit + mantissa);
+    output = (-1 ^ sign_bit) * (2 ^ exponent) * (mantissa);
 
     cout << " filled output: " << bitset<width>(output) << endl;
     return output;
