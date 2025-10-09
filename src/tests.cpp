@@ -53,46 +53,25 @@ bool tests::test() {
 
     bool success = true;
     uint16_t pass = 0;
+    for (size_t i = 0; i < NUM_TESTS; i++) {
+        // random value
+        float const rand_val = rand_min_max<float>(MIN_VALUE, MAX_VALUE);
 
-    // the test numbers
-    float test_nums[] = {-1.5, 1.23, 4.98, -53.5};
-
-    for (size_t i = 0; i < size(test_nums); i++) {
-        data.val_float = test_nums[i];
+        data.val_float = rand_val;
 
         // calculate using ieee_754 function
         float ieee_754_value = ieee_754.ieee_754(data.val_int);
 
         // test the results
         float const epsilon = std::numeric_limits<float>::epsilon();
-        bool test_success = (abs(ieee_754_value - test_nums[i]) < epsilon);
+        bool test_success = (abs(ieee_754_value - rand_val) < epsilon);
         if (test_success) {
             pass += 1;
         }
 
         // print row
-        print_row(test_success, test_nums[i], data.val_int, ieee_754_value);
+        print_row(test_success, rand_val, data.val_int, ieee_754_value);
     }
-
-    // for (size_t i = 0; i < NUM_TESTS; i++) {
-    //     // random value
-    //     float const rand_val = rand_min_max<float>(MIN_VALUE, MAX_VALUE);
-
-    //     data.val_float = rand_val;
-
-    //     // calculate using ieee_754 function
-    //     float ieee_754_value = ieee_754.ieee_754(data.val_int);
-
-    //     // test the results
-    //     float const epsilon = std::numeric_limits<float>::epsilon();
-    //     bool test_success = (abs(ieee_754_value - rand_val) < epsilon);
-    //     if (test_success) {
-    //         pass += 1;
-    //     }
-
-    //     // print row
-    //     print_row(test_success, rand_val, data.val_int, ieee_754_value);
-    // }
 
     // summarize results
     cout << "-------------------------------------------" << endl;
