@@ -17,9 +17,11 @@ class ieee754 {
    private:
     uint32_t bitwise_multiply(uint32_t a, uint32_t b);
     uint32_t bitwise_add(uint32_t a, uint32_t b);
-    bool read_bit(uint32_t data, uint32_t n);
-    uint32_t read_bit_segments(uint32_t data, uint32_t mask, uint32_t shift);
-    float conv_mantissa(uint32_t mantissa, bool normalized);
+    bool read_bit(uint32_t const data, uint32_t n);
+    uint32_t read_bit_segments(uint32_t const data, uint32_t const mask, uint32_t const shift);
+    uint8_t get_sign(uint32_t const data);
+    uint8_t get_exponent(uint32_t const data);
+    uint32_t get_mantissa(uint32_t const data);
 
    public:
     ieee754() {}
