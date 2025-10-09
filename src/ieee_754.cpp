@@ -34,7 +34,7 @@ uint32_t ieee754::bitwise_add(uint32_t a, uint32_t b) {
     return result;
 }
 
-// read bits from data at mask bits and shift to pull out segments
+// read bits from data at mask bits and shift right to pull out segments
 uint32_t ieee754::read_bit_segments(uint32_t const data, uint32_t const mask, uint32_t const shift) {
     uint32_t result = data & mask;
     result = result >> shift;
@@ -58,7 +58,13 @@ float ieee754::ieee_754(uint32_t const data) {
     int32_t exponent = get_exponent(data);
     uint32_t raw_mantissa = get_raw_mantissa(data);
 
-    float mantissa = (1 + raw_mantissa * pow(2, -23));
+    uint8_t leading_bit = 1;
+    // check for denormalized state
+    if (exponent == 0 && raw_mantissa != 0) {
+        leading_bit = 0;
+    }
+
+    float mantissa = (leading_bit + raw_mantissa * pow(2, -23));
     float output_float = pow(-1, sign_bit) * pow(2, exponent) * (mantissa);
     return output_float;
 }
