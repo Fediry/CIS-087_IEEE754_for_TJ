@@ -21,7 +21,6 @@ class ieee754 {
    private:
     uint32_t bitwise_multiply(uint32_t a, uint32_t b);
     uint32_t bitwise_add(uint32_t a, uint32_t b);
-    bool read_bit(uint32_t const data, uint32_t n);
     uint32_t read_bit_segments(uint32_t const data, uint32_t const mask, uint32_t const shift);
     uint32_t get_sign(uint32_t const data);
     int32_t get_exponent(uint32_t const data);
