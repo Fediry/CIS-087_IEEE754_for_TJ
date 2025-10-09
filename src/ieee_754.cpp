@@ -34,8 +34,6 @@ uint32_t ieee754::bitwise_add(uint32_t a, uint32_t b) {
     return result;
 }
 
-bool ieee754::read_bit(uint32_t data, uint32_t n) { return data & (1 << n); }
-
 // read bits from data at mask bits and shift to pull out segments
 uint32_t ieee754::read_bit_segments(uint32_t const data, uint32_t const mask, uint32_t const shift) {
     uint32_t result = data & mask;
