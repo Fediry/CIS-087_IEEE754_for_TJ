@@ -45,36 +45,22 @@ uint32_t ieee754::read_bit_segments(uint32_t const data, uint32_t const mask, ui
 
 uint32_t ieee754::get_sign(uint32_t const data) { return read_bit_segments(data, sign_mask, width - 1); }
 
-uint32_t ieee754::get_exponent(uint32_t const data) {
-    uint32_t raw_exponent = read_bit_segments(data, exp_mask, mantissa_width);
+int32_t ieee754::get_exponent(uint32_t const data) {
+    int32_t raw_exponent = read_bit_segments(data, exp_mask, mantissa_width);
     return raw_exponent - bias;
 }
 
-uint32_t ieee754::get_mantissa(uint32_t const data) {
+uint32_t ieee754::get_raw_mantissa(uint32_t const data) {
     uint32_t raw_mantissa = read_bit_segments(data, mantissa_mask, 0);
     return raw_mantissa;
 }
 
 float ieee754::ieee_754(uint32_t const data) {
-    float output;
-    // bool sign_bit = read_bit(data, width - 1);
-    uint8_t sign_bit = get_sign(data);
-    cout << "sign_bit: " << sign_bit;
+    uint32_t sign_bit = get_sign(data);
+    int32_t exponent = get_exponent(data);
+    uint32_t raw_mantissa = get_raw_mantissa(data);
 
-    uint8_t exponent = get_exponent(data);
-    cout << " exp: " << bitset<exp_width>(exponent);
-    cout << " exp: " << exponent;
-
-    uint32_t raw_mantissa = read_bit_segments(data, mantissa_mask, 0);
-    cout << " raw_mantissa: " << raw_mantissa;
-
-    float mantissa;
-    cout << " mantissa: " << mantissa;
-
-    cout << " empty output: " << bitset<width>(output) << endl;
-
-    output = pow(-1, sign_bit) * pow(2, exponent) * (mantissa);
-
-    cout << " filled output: " << bitset<width>(output) << endl;
-    return output;
+    float mantissa = (1 + raw_mantissa * pow(2, -23));
+    float output_float = pow(-1, sign_bit) * pow(2, exponent) * (mantissa);
+    return output_float;
 }

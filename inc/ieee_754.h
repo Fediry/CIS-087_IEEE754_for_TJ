@@ -24,8 +24,8 @@ class ieee754 {
     bool read_bit(uint32_t const data, uint32_t n);
     uint32_t read_bit_segments(uint32_t const data, uint32_t const mask, uint32_t const shift);
     uint32_t get_sign(uint32_t const data);
-    uint32_t get_exponent(uint32_t const data);
-    uint32_t get_mantissa(uint32_t const data);
+    int32_t get_exponent(uint32_t const data);
+    uint32_t get_raw_mantissa(uint32_t const data);
 
    public:
     ieee754() {}
