@@ -7,7 +7,7 @@ using namespace std;
 // IEEE 754 single-precision float constants
 uint8_t const width = 32U;
 uint8_t const exp_width = 8U;
-uint8_t const mantissa_width = width - exp_width - 1;
+uint8_t const mantissa_width = width - exp_width - 1U;
 uint8_t const bias = 127U;
 
 // Bit masks mapped to the segments of the IEEE 754 32-bit binary

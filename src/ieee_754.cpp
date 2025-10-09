@@ -6,15 +6,15 @@ using namespace std;
  * When b is odd during this process, add a to the result.
  */
 uint32_t ieee754::bitwise_multiply(uint32_t a, uint32_t b) {
-    uint32_t result = 0;
+    uint32_t result = 0U;
 
-    while (b > 0) {
-        if (b & 1) {
+    while (b > 0U) {
+        if (b & 0b1) {
             result += a;
         }
 
-        a = a << 1;
-        b = b >> 1;
+        a = a << 0b1;
+        b = b >> 0b1;
     }
     return result;
 }
@@ -25,9 +25,9 @@ uint32_t ieee754::bitwise_multiply(uint32_t a, uint32_t b) {
 uint32_t ieee754::bitwise_add(uint32_t a, uint32_t b) {
     uint32_t result;
 
-    while (b > 0) {
+    while (b > 0U) {
         uint32_t result = a ^ b;
-        uint32_t carry = (a & b) << 1;
+        uint32_t carry = (a & b) << 0b1;
         a = result;
         b = carry;
     }
@@ -41,7 +41,7 @@ uint32_t ieee754::read_bit_segments(uint32_t const data, uint32_t const mask, ui
     return result;
 }
 
-uint32_t ieee754::get_sign(uint32_t const data) { return read_bit_segments(data, sign_mask, width - 1); }
+uint32_t ieee754::get_sign(uint32_t const data) { return read_bit_segments(data, sign_mask, (width - 1U)); }
 
 int32_t ieee754::get_exponent(uint32_t const data) {
     int32_t raw_exponent = read_bit_segments(data, exp_mask, mantissa_width);
@@ -49,7 +49,7 @@ int32_t ieee754::get_exponent(uint32_t const data) {
 }
 
 uint32_t ieee754::get_raw_mantissa(uint32_t const data) {
-    uint32_t raw_mantissa = read_bit_segments(data, mantissa_mask, 0);
+    uint32_t raw_mantissa = read_bit_segments(data, mantissa_mask, 0U);
     return raw_mantissa;
 }
 
@@ -58,13 +58,13 @@ float ieee754::ieee_754(uint32_t const data) {
     int32_t exponent = get_exponent(data);
     uint32_t raw_mantissa = get_raw_mantissa(data);
 
-    uint8_t leading_bit = 1;
+    uint8_t leading_bit = 1U;
     // check for denormalized state
     if (exponent == 0 && raw_mantissa != 0) {
         leading_bit = 0;
     }
 
-    float mantissa = (leading_bit + raw_mantissa * pow(2, -23));
-    float output_float = pow(-1, sign_bit) * pow(2, exponent) * (mantissa);
+    float mantissa = (leading_bit + raw_mantissa * pow(2U, -mantissa_width));
+    float output_float = pow(-1, sign_bit) * pow(2U, exponent) * (mantissa);
     return output_float;
 }
