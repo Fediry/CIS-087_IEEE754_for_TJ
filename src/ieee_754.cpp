@@ -63,10 +63,6 @@ float ieee754::ieee_754(uint32_t const data) {
     uint32_t raw_mantissa = get_raw_mantissa(data);
 
     uint8_t leading_bit = 1;
-    // // check for denormalized state
-    // if (exponent == 0U && raw_mantissa != 0U) {
-    //     leading_bit = 0;
-    // }
 
     float mantissa = (leading_bit + raw_mantissa * pow(2U, -mantissa_width));
     float output_float = sign * (mantissa)*pow(2U, exponent);
