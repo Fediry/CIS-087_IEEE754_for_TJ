@@ -22,14 +22,14 @@ class ieee754 {
     uint32_t bitwise_add(uint32_t a, uint32_t b);
     uint32_t bitwise_multiply(uint32_t a, uint32_t b);
     uint32_t bitwise_power(uint32_t a, uint32_t b);
-    uint32_t read_bit_segments(uint32_t const data, uint32_t const mask, uint32_t const shift);
-    uint32_t get_sign(uint32_t const data);
-    int32_t get_exponent(uint32_t const data);
-    uint32_t get_raw_mantissa(uint32_t const data);
+    uint32_t read_bit_segments(uint32_t const &data, uint32_t const mask, uint32_t const shift);
+    uint32_t get_sign(uint32_t const &data);
+    int32_t get_exponent(uint32_t const &data);
+    uint32_t get_raw_mantissa(uint32_t const &data);
 
    public:
     ieee754() {}
     // using rule of zero
 
-    float ieee_754(uint32_t const data);
+    float ieee_754(uint32_t const &data);
 };

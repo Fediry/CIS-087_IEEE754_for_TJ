@@ -37,25 +37,25 @@ uint32_t ieee754::bitwise_multiply(uint32_t a, uint32_t b) {
 uint32_t ieee754::bitwise_power(uint32_t a, uint32_t b) {}
 
 // read bits from data at mask bits and shift right to pull out segments
-uint32_t ieee754::read_bit_segments(uint32_t const data, uint32_t const mask, uint32_t const shift) {
+uint32_t ieee754::read_bit_segments(uint32_t const &data, uint32_t const mask, uint32_t const shift) {
     uint32_t result = data & mask;
     result = result >> shift;
     return result;
 }
 
-uint32_t ieee754::get_sign(uint32_t const data) { return read_bit_segments(data, sign_mask, (width - 1U)); }
+uint32_t ieee754::get_sign(uint32_t const &data) { return read_bit_segments(data, sign_mask, (width - 1U)); }
 
-int32_t ieee754::get_exponent(uint32_t const data) {
+int32_t ieee754::get_exponent(uint32_t const &data) {
     int32_t raw_exponent = read_bit_segments(data, exp_mask, mantissa_width);
     return raw_exponent - bias;
 }
 
-uint32_t ieee754::get_raw_mantissa(uint32_t const data) {
+uint32_t ieee754::get_raw_mantissa(uint32_t const &data) {
     uint32_t raw_mantissa = read_bit_segments(data, mantissa_mask, 0U);
     return raw_mantissa;
 }
 
-float ieee754::ieee_754(uint32_t const data) {
+float ieee754::ieee_754(uint32_t const &data) {
     uint32_t sign_bit = get_sign(data);
     int8_t sign = (sign_bit == 0) ? 1 : -1;
 
