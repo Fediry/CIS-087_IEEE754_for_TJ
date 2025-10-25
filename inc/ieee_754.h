@@ -12,7 +12,7 @@ uint8_t const bias = 127U;
 
 // Bit masks mapped to the segments of the IEEE 754 32-bit binary
 // (Used hex for ease of reading)
-uint32_t const sign_mask = 0xFFFFFFFF;
+uint32_t const sign_mask = 0x80000000;
 uint32_t const exp_mask = 0x7F800000;
 uint32_t const mantissa_mask = 0x7FFFFF;
 uint32_t const leading_bit_mask = 0x800000;
